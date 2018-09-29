@@ -6,10 +6,10 @@ import android.support.v4.app.FragmentPagerAdapter
 import io.indrian16.getrestapi.ui.post.PostFragment
 import io.indrian16.getrestapi.ui.todo.TodoFragment
 import io.indrian16.getrestapi.ui.user.UserFragment
-import io.indrian16.getrestapi.util.Fragment_TITLE_0
-import io.indrian16.getrestapi.util.Fragment_TITLE_1
-import io.indrian16.getrestapi.util.Fragment_TITLE_2
-import io.indrian16.getrestapi.util.NUM_PAGE
+import io.indrian16.getrestapi.util.Constant.Companion.Fragment_TITLE_0
+import io.indrian16.getrestapi.util.Constant.Companion.Fragment_TITLE_1
+import io.indrian16.getrestapi.util.Constant.Companion.Fragment_TITLE_2
+import io.indrian16.getrestapi.util.Constant.Companion.NUM_PAGE
 
 class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 

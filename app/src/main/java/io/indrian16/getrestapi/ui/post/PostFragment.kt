@@ -24,8 +24,8 @@ class PostFragment : PostContract.View, Fragment() {
         presenter.start()
     }
 
-    private var recyclerView: RecyclerView? = null
-    private var progressBar: ProgressBar? = null
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -44,24 +44,24 @@ class PostFragment : PostContract.View, Fragment() {
 
     private fun initView() {
 
-        recyclerView?.layoutManager = LinearLayoutManager(context,
+        recyclerView.layoutManager = LinearLayoutManager(context,
                 LinearLayoutManager.VERTICAL, false)
-        recyclerView?.adapter = PostAdapter()
+        recyclerView.adapter = PostAdapter()
     }
 
     override fun showLoading() {
 
-        progressBar?.visibility = View.VISIBLE
+        progressBar.visibility = View.VISIBLE
     }
 
     override fun hideLoading() {
 
-        progressBar?.visibility = View.GONE
+        progressBar.visibility = View.GONE
     }
 
     override fun updatePosts(postList: List<Post>) {
 
-        (recyclerView?.adapter as PostAdapter).addPost(postList)
+        (recyclerView.adapter as PostAdapter).addPost(postList)
     }
 
     override fun showError(throwable: Throwable) {

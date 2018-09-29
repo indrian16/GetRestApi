@@ -17,8 +17,8 @@ import io.indrian16.getrestapi.ui.todo.adapter.TodoAdapter
 
 class TodoFragment :TodoContract.View, Fragment() {
 
-    private var recyclerView: RecyclerView? = null
-    private var progressBar: ProgressBar? = null
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var progressBar: ProgressBar
 
     override val presenter = TodoPresenter(this)
 
@@ -44,24 +44,24 @@ class TodoFragment :TodoContract.View, Fragment() {
 
     private fun initView() {
 
-        recyclerView?.layoutManager = LinearLayoutManager(context,
+        recyclerView.layoutManager = LinearLayoutManager(context,
                 LinearLayoutManager.VERTICAL, false)
-        recyclerView?.adapter = TodoAdapter()
+        recyclerView.adapter = TodoAdapter()
     }
 
     override fun showLoading() {
 
-        progressBar?.visibility = View.VISIBLE
+        progressBar.visibility = View.VISIBLE
     }
 
     override fun hideLoading() {
 
-        progressBar?.visibility = View.GONE
+        progressBar.visibility = View.GONE
     }
 
     override fun updatePosts(todoList: List<Todo>) {
 
-        (recyclerView?.adapter as TodoAdapter).addTodo(todoList)
+        (recyclerView.adapter as TodoAdapter).addTodo(todoList)
     }
 
     override fun showError(throwable: Throwable) {

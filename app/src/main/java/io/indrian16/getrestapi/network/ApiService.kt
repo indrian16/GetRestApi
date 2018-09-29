@@ -3,7 +3,7 @@ package io.indrian16.getrestapi.network
 import io.indrian16.getrestapi.model.Post
 import io.indrian16.getrestapi.model.Todo
 import io.indrian16.getrestapi.model.User
-import io.indrian16.getrestapi.util.BASE_URL
+import io.indrian16.getrestapi.util.Constant.Companion.BASE_URL
 import io.reactivex.Observable
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
