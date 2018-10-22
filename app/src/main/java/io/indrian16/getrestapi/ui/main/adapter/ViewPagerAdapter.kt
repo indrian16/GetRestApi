@@ -1,4 +1,4 @@
-package io.indrian16.getrestapi.base.adapter
+package io.indrian16.getrestapi.ui.main.adapter
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
