@@ -5,8 +5,9 @@ import io.indrian16.getrestapi.ui.main.view.MainView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class MainPresenterImpl(private val mainView: MainView) : MainPresenter {
+class MainPresenterImpl @Inject internal constructor(private val mainView: MainView) : MainPresenter {
 
     private var internetDisposable: Disposable? = null
 
@@ -32,8 +33,16 @@ class MainPresenterImpl(private val mainView: MainView) : MainPresenter {
                 )
     }
 
+    private fun safelyDispose(disposable: Disposable?) {
+
+        if (disposable != null && disposable.isDisposed) {
+
+            disposable.dispose()
+        }
+    }
+
     override fun unSubscribe() {
 
-        internetDisposable?.dispose()
+        safelyDispose(internetDisposable)
     }
 }

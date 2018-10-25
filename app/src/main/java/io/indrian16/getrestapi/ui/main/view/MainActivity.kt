@@ -1,24 +1,33 @@
 package io.indrian16.getrestapi.ui.main.view
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
+import dagger.android.AndroidInjection
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
 import io.indrian16.getrestapi.R
-import io.indrian16.getrestapi.ui.main.presenter.MainPresenterImpl
+import io.indrian16.getrestapi.ui.main.presenter.MainPresenter
 import io.indrian16.getrestapi.util.CommonUtil
 import io.indrian16.getrestapi.util.setupActionBar
 import io.indrian16.getrestapi.util.setupViewPager
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), MainView {
+class MainActivity : AppCompatActivity(), MainView, HasSupportFragmentInjector {
 
-    private val presenter = MainPresenterImpl(this)
+    @Inject internal lateinit var presenter: MainPresenter
+
+    @Inject internal lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         initView()
+        AndroidInjection.inject(this)
         presenter.checkInternetStatus()
     }
 
@@ -44,6 +53,11 @@ class MainActivity : AppCompatActivity(), MainView {
     override fun showError(error: Throwable) {
 
         Toast.makeText(baseContext, error.message, Toast.LENGTH_LONG).show()
+    }
+
+    override fun supportFragmentInjector(): AndroidInjector<Fragment> {
+
+        return dispatchingAndroidInjector
     }
 
     override fun onDestroy() {

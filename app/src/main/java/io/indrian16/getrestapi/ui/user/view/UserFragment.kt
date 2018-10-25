@@ -1,7 +1,6 @@
 package io.indrian16.getrestapi.ui.user.view
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -12,15 +11,17 @@ import android.widget.Toast
 
 import io.indrian16.getrestapi.R
 import io.indrian16.getrestapi.model.User
-import io.indrian16.getrestapi.ui.user.presenter.UserPresenterImpl
+import io.indrian16.getrestapi.ui.basefragment.BaseFragment
+import io.indrian16.getrestapi.ui.user.presenter.UserPresenter
 import io.indrian16.getrestapi.ui.user.rv.UserAdapter
+import javax.inject.Inject
 
-class UserFragment : Fragment(), UserView {
+class UserFragment : BaseFragment(), UserView {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
 
-    private val presenter = UserPresenterImpl(this)
+    @Inject internal lateinit var presenter: UserPresenter
 
     override fun onResume() {
         super.onResume()

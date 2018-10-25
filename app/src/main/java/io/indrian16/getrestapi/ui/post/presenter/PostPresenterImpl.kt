@@ -5,14 +5,18 @@ import io.indrian16.getrestapi.ui.post.view.PostView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class PostPresenterImpl(private val postView: PostView) : PostPresenter {
+class PostPresenterImpl @Inject internal constructor(
+
+        private val postView: PostView,
+        private val apiService: ApiService) : PostPresenter {
 
     private var subscription: Disposable? = null
 
     override fun loadPost() {
 
-        subscription = ApiService.create()
+        subscription = apiService
                 .getPosts()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -32,7 +36,6 @@ class PostPresenterImpl(private val postView: PostView) : PostPresenter {
             disposable.dispose()
         }
     }
-
 
     override fun unSubscribe() {
 

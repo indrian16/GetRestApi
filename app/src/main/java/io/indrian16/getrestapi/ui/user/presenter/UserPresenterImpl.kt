@@ -5,14 +5,18 @@ import io.indrian16.getrestapi.ui.user.view.UserView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class UserPresenterImpl(private val userView: UserView) : UserPresenter {
+class UserPresenterImpl @Inject internal constructor(
+
+        private val userView: UserView,
+        private val apiService: ApiService) : UserPresenter {
 
     private var subscription: Disposable? = null
 
     override fun loadUser() {
 
-        subscription = ApiService.create()
+        subscription = apiService
                 .getUsers()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

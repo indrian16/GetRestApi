@@ -2,7 +2,6 @@ package io.indrian16.getrestapi.ui.todo.view
 
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -13,15 +12,17 @@ import android.widget.Toast
 
 import io.indrian16.getrestapi.R
 import io.indrian16.getrestapi.model.Todo
-import io.indrian16.getrestapi.ui.todo.presenter.TodoPresenterImpl
+import io.indrian16.getrestapi.ui.basefragment.BaseFragment
+import io.indrian16.getrestapi.ui.todo.presenter.TodoPresenter
 import io.indrian16.getrestapi.ui.todo.rv.TodoAdapter
+import javax.inject.Inject
 
-class TodoFragment : TodoView, Fragment() {
+class TodoFragment : BaseFragment(), TodoView {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
 
-    private val presenter = TodoPresenterImpl(this)
+    @Inject internal lateinit var presenter: TodoPresenter
 
     override fun onResume() {
         super.onResume()

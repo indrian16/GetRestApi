@@ -1,7 +1,6 @@
 package io.indrian16.getrestapi.ui.post.view
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -12,12 +11,14 @@ import android.widget.Toast
 
 import io.indrian16.getrestapi.R
 import io.indrian16.getrestapi.model.Post
-import io.indrian16.getrestapi.ui.post.presenter.PostPresenterImpl
+import io.indrian16.getrestapi.ui.basefragment.BaseFragment
+import io.indrian16.getrestapi.ui.post.presenter.PostPresenter
 import io.indrian16.getrestapi.ui.post.rv.PostAdapter
+import javax.inject.Inject
 
-class PostFragment : Fragment(), PostView {
+class PostFragment : BaseFragment(), PostView {
 
-    private var presenter = PostPresenterImpl(this)
+    @Inject internal lateinit var presenter: PostPresenter
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar

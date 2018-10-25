@@ -5,14 +5,18 @@ import io.indrian16.getrestapi.ui.todo.view.TodoView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class TodoPresenterImpl(private val todoView: TodoView) : TodoPresenter {
+class TodoPresenterImpl @Inject internal constructor(
+
+        private val todoView: TodoView,
+        private val apiService: ApiService) : TodoPresenter {
 
     private var subscription: Disposable? = null
 
     override fun loadPost() {
 
-        subscription = ApiService.create()
+        subscription = apiService
                 .getTodos()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
