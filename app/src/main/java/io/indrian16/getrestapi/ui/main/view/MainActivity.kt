@@ -1,7 +1,7 @@
-package io.indrian16.getrestapi.ui.main
+package io.indrian16.getrestapi.ui.main.view
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import io.indrian16.getrestapi.R
 import io.indrian16.getrestapi.util.setupActionBar
 import io.indrian16.getrestapi.util.setupViewPager

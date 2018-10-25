@@ -1,4 +1,4 @@
-package io.indrian16.getrestapi.ui.todo.adapter
+package io.indrian16.getrestapi.ui.todo.rv
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater

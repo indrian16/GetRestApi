@@ -1,5 +1,4 @@
-package io.indrian16.getrestapi.ui.todo
-
+package io.indrian16.getrestapi.ui.post.view
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -12,30 +11,31 @@ import android.widget.ProgressBar
 import android.widget.Toast
 
 import io.indrian16.getrestapi.R
-import io.indrian16.getrestapi.model.Todo
-import io.indrian16.getrestapi.ui.todo.adapter.TodoAdapter
+import io.indrian16.getrestapi.model.Post
+import io.indrian16.getrestapi.ui.post.presenter.PostPresenterImpl
+import io.indrian16.getrestapi.ui.post.rv.PostAdapter
 
-class TodoFragment :TodoContract.View, Fragment() {
+class PostFragment : Fragment(), PostView {
+
+    private var presenter = PostPresenterImpl(this)
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
 
-    override val presenter = TodoPresenter(this)
-
     override fun onResume() {
         super.onResume()
-        presenter.start()
+        presenter.loadPost()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        val root = inflater.inflate(R.layout.fragment_todo, container, false)
+        val root = inflater.inflate(R.layout.fragment_post, container, false)
 
         with(root) {
 
-            recyclerView = findViewById(R.id.todo_recycler_view)
-            progressBar = findViewById(R.id.todo_progressbar)
+            recyclerView = findViewById(R.id.post_recycler_view)
+            progressBar = findViewById(R.id.post_progressbar)
         }
 
         initView()
@@ -46,7 +46,7 @@ class TodoFragment :TodoContract.View, Fragment() {
 
         recyclerView.layoutManager = LinearLayoutManager(context,
                 LinearLayoutManager.VERTICAL, false)
-        recyclerView.adapter = TodoAdapter()
+        recyclerView.adapter = PostAdapter()
     }
 
     override fun showLoading() {
@@ -59,14 +59,14 @@ class TodoFragment :TodoContract.View, Fragment() {
         progressBar.visibility = View.GONE
     }
 
-    override fun updatePosts(todoList: List<Todo>) {
+    override fun updatePost(postList: List<Post>) {
 
-        (recyclerView.adapter as TodoAdapter).addTodo(todoList)
+        (recyclerView.adapter as PostAdapter).addPost(postList)
     }
 
-    override fun showError(throwable: Throwable) {
+    override fun showError(error: Throwable) {
 
-        Toast.makeText(context, throwable.message, Toast.LENGTH_LONG).show()
+        Toast.makeText(context, error.message, Toast.LENGTH_LONG).show()
     }
 
     override fun onDetach() {

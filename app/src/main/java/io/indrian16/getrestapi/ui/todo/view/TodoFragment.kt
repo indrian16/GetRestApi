@@ -1,4 +1,4 @@
-package io.indrian16.getrestapi.ui.user
+package io.indrian16.getrestapi.ui.todo.view
 
 
 import android.os.Bundle
@@ -12,30 +12,31 @@ import android.widget.ProgressBar
 import android.widget.Toast
 
 import io.indrian16.getrestapi.R
-import io.indrian16.getrestapi.model.User
-import io.indrian16.getrestapi.ui.user.adapter.UserAdapter
+import io.indrian16.getrestapi.model.Todo
+import io.indrian16.getrestapi.ui.todo.presenter.TodoPresenterImpl
+import io.indrian16.getrestapi.ui.todo.rv.TodoAdapter
 
-class UserFragment : UserContract.View, Fragment() {
+class TodoFragment : TodoView, Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
 
-    override val presenter = UserPresenter(this)
+    private val presenter = TodoPresenterImpl(this)
 
     override fun onResume() {
         super.onResume()
-        presenter.start()
+        presenter.loadPost()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        val root = inflater.inflate(R.layout.fragment_user, container, false)
+        val root = inflater.inflate(R.layout.fragment_todo, container, false)
 
         with(root) {
 
-            recyclerView = findViewById(R.id.user_recycler_view)
-            progressBar = findViewById(R.id.user_progressbar)
+            recyclerView = findViewById(R.id.todo_recycler_view)
+            progressBar = findViewById(R.id.todo_progressbar)
         }
 
         initView()
@@ -46,7 +47,7 @@ class UserFragment : UserContract.View, Fragment() {
 
         recyclerView.layoutManager = LinearLayoutManager(context,
                 LinearLayoutManager.VERTICAL, false)
-        recyclerView.adapter = UserAdapter()
+        recyclerView.adapter = TodoAdapter()
     }
 
     override fun showLoading() {
@@ -59,13 +60,18 @@ class UserFragment : UserContract.View, Fragment() {
         progressBar.visibility = View.GONE
     }
 
-    override fun updatePosts(userList: List<User>) {
+    override fun updatePosts(todoList: List<Todo>) {
 
-        (recyclerView.adapter as UserAdapter).addUser(userList)
+        (recyclerView.adapter as TodoAdapter).addTodo(todoList)
     }
 
     override fun showError(throwable: Throwable) {
 
         Toast.makeText(context, throwable.message, Toast.LENGTH_LONG).show()
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        presenter.unSubscribe()
     }
 }

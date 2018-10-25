@@ -1,11 +1,11 @@
-package io.indrian16.getrestapi.ui.main.adapter
+package io.indrian16.getrestapi.ui.main.rv
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import io.indrian16.getrestapi.ui.post.PostFragment
-import io.indrian16.getrestapi.ui.todo.TodoFragment
-import io.indrian16.getrestapi.ui.user.UserFragment
+import io.indrian16.getrestapi.ui.post.view.PostFragment
+import io.indrian16.getrestapi.ui.todo.view.TodoFragment
+import io.indrian16.getrestapi.ui.user.view.UserFragment
 import io.indrian16.getrestapi.util.AppConstant
 
 class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {

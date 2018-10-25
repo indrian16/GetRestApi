@@ -1,26 +1,27 @@
-package io.indrian16.getrestapi.ui.todo
+package io.indrian16.getrestapi.ui.post.presenter
 
 import io.indrian16.getrestapi.network.ApiService
+import io.indrian16.getrestapi.ui.post.view.PostView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-class TodoPresenter(private val todoView: TodoContract.View) : TodoContract.Presenter {
+class PostPresenterImpl(private val postView: PostView) : PostPresenter {
 
     private var subscription: Disposable? = null
 
     override fun loadPost() {
 
         subscription = ApiService.create()
-                .getTodos()
+                .getPosts()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { todoView.showLoading() }
-                .doOnTerminate { todoView.hideLoading() }
+                .doOnSubscribe{postView.showLoading()}
+                .doOnTerminate { postView.hideLoading() }
                 .subscribe(
 
-                        {todoList -> todoView.updatePosts(todoList)},
-                        {throwable -> todoView.showError(throwable)}
+                        {postList -> postView.updatePost(postList)},
+                        {error -> postView.showError(error)}
                 )
     }
 
@@ -32,13 +33,9 @@ class TodoPresenter(private val todoView: TodoContract.View) : TodoContract.Pres
         }
     }
 
+
     override fun unSubscribe() {
 
         safelyDispose(subscription)
-    }
-
-    override fun start() {
-
-        loadPost()
     }
 }

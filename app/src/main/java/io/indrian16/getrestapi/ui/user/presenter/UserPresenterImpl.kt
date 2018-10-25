@@ -1,26 +1,27 @@
-package io.indrian16.getrestapi.ui.post
+package io.indrian16.getrestapi.ui.user.presenter
 
 import io.indrian16.getrestapi.network.ApiService
+import io.indrian16.getrestapi.ui.user.view.UserView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-class PostPresenter(private val postView: PostContract.View) : PostContract.Presenter {
+class UserPresenterImpl(private val userView: UserView) : UserPresenter {
 
     private var subscription: Disposable? = null
 
-    override fun loadPost() {
+    override fun loadUser() {
 
         subscription = ApiService.create()
-                .getPosts()
+                .getUsers()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { postView.showLoading() }
-                .doOnTerminate { postView.hideLoading() }
+                .doOnSubscribe { userView.showLoading() }
+                .doOnTerminate { userView.hideLoading() }
                 .subscribe(
 
-                        { postList -> postView.updatePosts(postList) },
-                        { throwable -> postView.showError(throwable) }
+                        {userList -> userView.updatePosts(userList)},
+                        {throwable -> userView.showError(throwable)}
                 )
     }
 
@@ -37,8 +38,4 @@ class PostPresenter(private val postView: PostContract.View) : PostContract.Pres
         safelyDispose(subscription)
     }
 
-    override fun start() {
-
-        loadPost()
-    }
 }

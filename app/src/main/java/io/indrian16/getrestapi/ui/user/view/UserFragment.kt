@@ -1,5 +1,4 @@
-package io.indrian16.getrestapi.ui.post
-
+package io.indrian16.getrestapi.ui.user.view
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -12,30 +11,31 @@ import android.widget.ProgressBar
 import android.widget.Toast
 
 import io.indrian16.getrestapi.R
-import io.indrian16.getrestapi.model.Post
-import io.indrian16.getrestapi.ui.post.adapter.PostAdapter
+import io.indrian16.getrestapi.model.User
+import io.indrian16.getrestapi.ui.user.presenter.UserPresenterImpl
+import io.indrian16.getrestapi.ui.user.rv.UserAdapter
 
-class PostFragment : PostContract.View, Fragment() {
-
-    override val presenter = PostPresenter(this)
-
-    override fun onResume() {
-        super.onResume()
-        presenter.start()
-    }
+class UserFragment : Fragment(), UserView {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
 
+    private val presenter = UserPresenterImpl(this)
+
+    override fun onResume() {
+        super.onResume()
+        presenter.loadUser()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        val root = inflater.inflate(R.layout.fragment_post, container, false)
+        val root = inflater.inflate(R.layout.fragment_user, container, false)
 
         with(root) {
 
-            recyclerView = findViewById(R.id.post_recycler_view)
-            progressBar = findViewById(R.id.post_progressbar)
+            recyclerView = findViewById(R.id.user_recycler_view)
+            progressBar = findViewById(R.id.user_progressbar)
         }
 
         initView()
@@ -46,7 +46,7 @@ class PostFragment : PostContract.View, Fragment() {
 
         recyclerView.layoutManager = LinearLayoutManager(context,
                 LinearLayoutManager.VERTICAL, false)
-        recyclerView.adapter = PostAdapter()
+        recyclerView.adapter = UserAdapter()
     }
 
     override fun showLoading() {
@@ -59,18 +59,13 @@ class PostFragment : PostContract.View, Fragment() {
         progressBar.visibility = View.GONE
     }
 
-    override fun updatePosts(postList: List<Post>) {
+    override fun updatePosts(userList: List<User>) {
 
-        (recyclerView.adapter as PostAdapter).addPost(postList)
+        (recyclerView.adapter as UserAdapter).addUser(userList)
     }
 
     override fun showError(throwable: Throwable) {
 
         Toast.makeText(context, throwable.message, Toast.LENGTH_LONG).show()
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        presenter.unSubscribe()
     }
 }

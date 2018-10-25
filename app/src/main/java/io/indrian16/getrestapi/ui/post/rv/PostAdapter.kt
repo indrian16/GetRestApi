@@ -1,4 +1,4 @@
-package io.indrian16.getrestapi.ui.post.adapter
+package io.indrian16.getrestapi.ui.post.rv
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
